@@ -9,7 +9,12 @@
     "dev": "nodemon",
     "seed": "tsx prisma/seed.ts",
     "prisma:push": "npx prisma db push",
-    "prisma:generate": "npx prisma generate"
+    "prisma:generate": "npx prisma generate",
+    "db:up:test": "docker compose -f docker-compose.test.yml up -d --wait db-test",
+    "db:migrate:test": "tsx scripts/migrate-test.ts",
+    "test": "npm run test:unit && npm run test:integration",
+    "test:unit": "jest --selectProjects unit",
+    "test:integration": "npm run db:up:test && npm run db:migrate:test && jest --selectProjects integration --runInBand"
   },
   "keywords": [],
   "author": "",
@@ -29,14 +34,20 @@
     "tsx": "^4.21.0"
   },
   "devDependencies": {
+    "@faker-js/faker": "^9.9.0",
     "@types/cors": "^2.8.19",
     "@types/express": "^5.0.6",
+    "@types/jest": "^30.0.0",
     "@types/jsonwebtoken": "^9.0.10",
     "@types/morgan": "^1.9.10",
     "@types/multer": "^2.0.0",
     "@types/node": "^25.0.9",
+    "@types/supertest": "^7.2.1",
+    "jest": "^30.5.2",
     "nodemon": "^3.1.11",
     "prisma": "^7.4.0",
+    "supertest": "^7.3.1",
+    "ts-jest": "^29.4.15",
     "ts-node": "^10.9.2",
     "typescript": "^5.9.3"
   }
